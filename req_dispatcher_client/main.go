@@ -26,7 +26,7 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.Dispatch(ctx, &pb.ReqDispatchRequest{Host: "example.com", Port: 8080, Path: "/api/example"})
+	r, err := c.Dispatch(ctx, &pb.ReqDispatchRequest{Host: host, Port: port, Path: path})
 	if err != nil {
 		log.Fatalf("could not dispatch: %v", err)
 	}
