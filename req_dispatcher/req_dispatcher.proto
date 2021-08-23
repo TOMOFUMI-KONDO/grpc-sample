@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "example.com/grpc-sample/req_dispatcher";
+
+package req_dispatcher;
+
+service ReqDispatcher{
+  rpc Dispatch(ReqDispatchRequest)returns(ReqDispatchReply){}
+}
+
+message ReqDispatchRequest{
+  string host = 1;
+  int32 port = 2;
+  string path = 3;
+}
+
+message ReqDispatchReply{
+  int32 status = 1;
+  string message = 2;
+  int32 latency_ms = 3;
+}
