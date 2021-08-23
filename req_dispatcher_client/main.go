@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"log"
-	"strconv"
 	"time"
 
 	pb "example.com/grpc-sample/req_dispatcher"
@@ -11,13 +10,13 @@ import (
 )
 
 const (
-	host = "localhost"
-	port = 8080
+	host = "example.com"
+	port = 443
 	path = "/api/example"
 )
 
 func main() {
-	conn, err := grpc.Dial(host+":"+strconv.Itoa(port), grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
