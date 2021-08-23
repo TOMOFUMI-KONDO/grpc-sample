@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"log"
+	"os"
+	"strconv"
 	"time"
 
 	pb "example.com/grpc-sample/req_dispatcher"
@@ -10,9 +12,9 @@ import (
 )
 
 const (
-	host = "example.com"
-	port = 443
-	path = "/api/example"
+	defaultHost       = "example.com"
+	defaultPort int32 = 443
+	defaultPath       = "/api/example"
 )
 
 func main() {
@@ -22,6 +24,23 @@ func main() {
 	}
 	defer conn.Close()
 	c := pb.NewReqDispatcherClient(conn)
+
+	host := defaultHost
+	if len(os.Args) > 1 {
+		host = os.Args[1]
+	}
+	port := defaultPort
+	if len(os.Args) > 2 {
+		i, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Fatalf("could not parse port: %v", err)
+		}
+		port = int32(i)
+	}
+	path := defaultPath
+	if len(os.Args) > 3 {
+		path = os.Args[3]
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
